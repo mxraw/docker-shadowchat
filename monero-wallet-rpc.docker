@@ -1,0 +1,17 @@
+FROM alpine:latest
+
+ARG WALLET_VOLUME
+ARG WALLET_NAME
+ARG RPC_BIND_PORT
+
+VOLUME ${WALLET_VOLUME}
+EXPOSE ${RPC_BIND_PORT}
+
+RUN apk update \
+  && apk upgrade \
+  && apk add monero
+
+RUN mkdir -p /opt/wallet
+COPY monero-wallet-rpc-entry.sh /
+RUN chmod +x /monero-wallet-rpc-entry.sh
+ENTRYPOINT ["sh", "-c", "/monero-wallet-rpc-entry.sh"]

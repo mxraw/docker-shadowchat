@@ -1,0 +1,19 @@
+FROM alpine:latest
+
+ARG SHADOWCHAT_ROOT
+
+EXPOSE 8900
+
+RUN apk update && \
+	apk upgrade && \
+	apk add git go && \
+	git clone https://github.com/mxraw/shadowchat.git ${SHADOWCHAT_ROOT} && \
+	cd shadowchat && \
+	go mod init shadowchat && \
+	go get github.com/skip2/go-qrcode && \
+	go mod tidy
+
+RUN rm -f ${SHADOWCHAT_ROOT}/config.json
+COPY shadowchat-entry.sh /
+RUN chmod +x shadowchat-entry.sh
+ENTRYPOINT [ "sh", "-c", "/shadowchat-entry.sh"]

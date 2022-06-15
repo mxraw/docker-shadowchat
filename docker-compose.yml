@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+
+  shadowchat:
+    build:
+      context: .
+      dockerfile: shadowchat.docker
+      args:
+        SHADOWCHAT_ROOT: ${SHADOWCHAT_ROOT}
+    container_name: xmr
+    ports:
+      - 8900:8900
+    environment:
+      - SHADOWCHAT_ROOT=${SHADOWCHAT_ROOT}
+      - MINIMUM_DONATION=${MINIMUM_DONATION}
+      - MAX_MESSAGE_CHARS=${MAX_MESSAGE_CHARS}
+      - MAX_NAME_CHARS=${MAX_NAME_CHARS}
+      - RPC_WALLET_URL=${RPC_WALLET_URL}
+      - WEB_VIEW_USERNAME=${WEB_VIEW_USERNAME}
+      - WEB_VIEW_PASSWORD=${WEB_VIEW_PASSWORD}
+      - OBS_WIDGET_REFRESH=${OBS_WIDGET_REFRESH}
+      - SHOW_AMOUNT_CHECKED_BY_DEFAULT=${SHOW_AMOUNT_CHECKED_BY_DEFAULT}
+      - ENABLE_EMAIL=${ENABLE_EMAIL}
+      - SMTP_SERVER=${SMTP_SERVER}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - SEND_TO_EMAIL=${SEND_TO_EMAIL}
+
+  monero-wallet-rpc:
+    build:
+      context: .
+      dockerfile: monero-wallet-rpc.docker
+      args:
+        WALLET_VOLUME: ${WALLET_VOLUME}
+        WALLET_NAME: ${WALLET_NAME}
+        RPC_BIND_PORT: ${RPC_BIND_PORT}
+    container_name: rpc
+    volumes:
+      - ./wallet:${WALLET_VOLUME}
+    ulimits:
+      memlock: -1
+    environment:
+      - WALLET_VOLUME=${WALLET_VOLUME}
+      - WALLET_NAME=${WALLET_NAME}
+      - WALLET_PASSWORD=${WALLET_PASSWORD}
+      - RPC_BIND_IP=${RPC_BIND_IP}
+      - RPC_BIND_PORT=${RPC_BIND_PORT}
+      - DAEMON_ADDRESS=${DAEMON_ADDRESS}
