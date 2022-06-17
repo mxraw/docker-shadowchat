@@ -1,5 +1,6 @@
 FROM alpine:latest
 
+ARG SHADOWCHAT_GIT
 ARG SHADOWCHAT_ROOT
 
 EXPOSE 8900
@@ -7,7 +8,7 @@ EXPOSE 8900
 RUN apk update && \
 	apk upgrade && \
 	apk add git go && \
-	git clone https://github.com/mxraw/shadowchat.git ${SHADOWCHAT_ROOT} && \
+	git clone ${SHADOWCHAT_GIT} ${SHADOWCHAT_ROOT} && \
 	cd shadowchat && \
 	go mod init shadowchat && \
 	go get github.com/skip2/go-qrcode && \

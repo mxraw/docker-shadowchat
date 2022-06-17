@@ -28,6 +28,6 @@ The container only needs to be build once, successive executions only require ``
 
 ### Note
 
-If ${WALLET_NAME}_viewonly is not present in $WALLET_ROOT, the container will attempt to generate a new wallet and all other required files using ${WALLET_PASSWORD}. This may be too insecure for your needs, especially when running the docker container on a VPS.
+If ```${WALLET_NAME}_viewonly``` is not present in ```$WALLET_ROOT```, the container will attempt to generate a new wallet and all other required files using ```$WALLET_PASSWORD```. This may be too insecure for your needs, especially when running the docker container on a VPS.
 
-You only need the ${WALLET_NAME}_viewonly and ${WALLET_NAME}_viewonly.keys files for shadowchat to function. You may want to backup all other files from ${WALLET_ROOT} to a local disk or supply your own keypair.
+You only need the ```${WALLET_NAME}_viewonly``` and ```${WALLET_NAME}_viewonly.keys``` files for shadowchat to function. You can either move all other files from ```$WALLET_ROOT``` to a local disk or supply your own ```viewonly``` keypair.
